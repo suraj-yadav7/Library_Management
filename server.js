@@ -4,6 +4,8 @@ import morgan from 'morgan'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import connectDB from './db.js'
+import userRouter from './route/userRoute.js'
+import bookRouter from './route/bookRoute.js'
 
 const app = express()
 
@@ -32,12 +34,18 @@ app.get('/', (req, res)=>{
 // to know which api is hit
 app.use(morgan('dev'));
 
+// parse req,body content into json
+app.use(express.json())
+
 const corsOption={
     origin:'*',
     methods:['GET',"POST", "PUT", "DELETE"],
     credentials:true,
     optionSuccessStatus:200
 };
+app.use(cors(corsOption))
+app.use('/api', userRouter);
+app.use('/api', bookRouter);
 
 
 
