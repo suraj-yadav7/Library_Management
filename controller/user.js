@@ -5,7 +5,6 @@ import jwt  from "jsonwebtoken";
 
 export const userRegister = async(req, res)=>{
     /* Salting and Hashing the Password */
-    console.log("req.body: ", req.body.isAdmin)
     const salt = await bcrypt.genSalt(10);
     const hashedPass = await bcrypt.hash(req.body.password, salt);
     try {
@@ -48,7 +47,8 @@ export const userLogin = async(req, res)=>{
         }
         const data={
             user:{
-                id:userData.id
+                id:userData.id,
+                isAdmin:userData.isAdmin
             }
         }
         const JWTToken=  jwt.sign(data,jwtSecretStr)

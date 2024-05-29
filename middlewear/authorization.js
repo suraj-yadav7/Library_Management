@@ -3,15 +3,16 @@ import jwt from 'jsonwebtoken'
 export const authorization =async(req, res, next)=>{
     
 try{
+    let authToken=req.headers['authorization']
+    if(authToken){
     let token = req.headers['authorization'].split(" ")[1]
-    let adminRole = req.body.isAdmin
-    let verifyToken = await jwt.verify(token, process.env.JWT_SECRET, (err, decode)=>{
-        console.log("decode: ", decode)
+    await jwt.verify(token, process.env.JWT_SECRET, (err, decode)=>{
         if(err){
             return res.status(400).json({status:false, message:"Not Authorized"})
         }
         else{
-            if(adminRole){
+            let isAdmin = decode.user.isAdmin
+            if(isAdmin){
                 next()
             }
             else{
@@ -21,9 +22,12 @@ try{
         }
     })
 }
+    else{
+        return res.status(400).json({status:false, message:"Need Authorizaton token to perform task"})
+    }
+}
 catch(error){
-    console.log("Error occured at Authorization: ", error)
+    console.log("Error occured at Authorization: ", error);
     return res.status(400).json({status:false, message:"Erroe while authorizing"})
 }
-
 }
