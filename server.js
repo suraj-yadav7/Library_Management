@@ -13,6 +13,7 @@ const app = express()
 dotenv.config()
 const port = process.env.PORT
 const MODE = process.env.NODE_MODE
+const client_url = process.env.CLIENT_URL
 
 // Connect mongodb
 connectDB()
@@ -39,12 +40,13 @@ app.use(morgan('dev'));
 app.use(express.json())
 
 const corsOption={
-    origin:'*',
+    origin:client_url,
     methods:['GET',"POST", "PUT", "DELETE"],
     credentials:true,
     optionSuccessStatus:200
 };
 app.use(cors(corsOption))
+
 app.use('/api', userRouter);
 app.use('/api', bookRouter);
 app.use('/api', borrowRouter);
