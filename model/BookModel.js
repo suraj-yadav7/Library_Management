@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose  from "mongoose";
 
 const BookSchema = new mongoose.Schema(
     {
@@ -25,8 +25,12 @@ const BookSchema = new mongoose.Schema(
         copies:{
             type:Number,
             default:1
-        }
+        },
+        borrowTrans:[{
+            type:mongoose.Types.ObjectId,
+            ref:"borrowTransaction"
+        }]
     },{timestamps:true}
-)
+);
 
 export const Book = mongoose.model("books", BookSchema)

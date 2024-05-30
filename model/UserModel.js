@@ -17,7 +17,11 @@ const userSchema = new mongoose.Schema(
     isAdmin:{
         type:Boolean,
         default:false
-    }
+    },
+    bookBorrow:[{
+        type:mongoose.Types.ObjectId,
+        ref:"borrowTransaction"
+    }]
 
 },{timestamps:true})
 

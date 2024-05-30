@@ -6,6 +6,7 @@ import cors from 'cors'
 import connectDB from './db.js'
 import userRouter from './route/userRoute.js'
 import bookRouter from './route/bookRoute.js'
+import borrowRouter from './route/borrowRoute.js'
 
 const app = express()
 
@@ -46,6 +47,7 @@ const corsOption={
 app.use(cors(corsOption))
 app.use('/api', userRouter);
 app.use('/api', bookRouter);
+app.use('/api', borrowRouter);
 
 
 
